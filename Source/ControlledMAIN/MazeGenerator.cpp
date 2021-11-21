@@ -49,8 +49,13 @@ void AMazeGenerator::BeginPlay()
     ULevelStreamingDynamic* test;
     bool succes;
 
-    int centerY = 0;//(SIZE * sizeSquare * sizeSquare * sizeSquare) / 2;
-    int centerX = 0;//(SIZE * sizeSquare * sizeSquare * sizeSquare) / 2;
+    int posX = sizeSquare * sizeSquare ;
+    int posY = sizeSquare * sizeSquare ;
+
+    int centerY = (posY * SIZE) / 2;
+    int centerX = (posX * SIZE) / 2;
+
+    
 
     for (size_t i = 0; i < _maze.Num(); i++)
     {
@@ -58,49 +63,49 @@ void AMazeGenerator::BeginPlay()
         {
             //FALTA POSAR EL namemaps[] correcte
             if (_maze[i].A[j] == 1) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[11], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[11], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 2) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[13], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[13], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 3) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[4], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[4], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 4) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[14], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[14], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 5) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[7], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[7], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 6) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[1], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[1], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 7) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[8], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[8], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 8) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[12], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[12], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 9) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[6], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[6], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 10) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[0], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[0], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 11) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[5], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[5], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 12) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[3], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[3], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 13) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[10], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[10], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 14) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[2], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[2], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             if (_maze[i].A[j] == 15) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[9], FVector((sizeSquare * sizeSquare * sizeSquare * i) - centerX, (sizeSquare * sizeSquare * sizeSquare * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[9], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
 
         }
