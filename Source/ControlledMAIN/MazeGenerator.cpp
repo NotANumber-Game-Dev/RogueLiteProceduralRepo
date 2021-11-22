@@ -49,8 +49,8 @@ void AMazeGenerator::BeginPlay()
     ULevelStreamingDynamic* test;
     bool succes;
 
-    int posX = sizeSquare * sizeSquare ;
-    int posY = sizeSquare * sizeSquare ;
+    int posX = sizeSquare * SIZE * SIZE ;
+    int posY = sizeSquare * SIZE * SIZE;
 
     int centerY =0; //(posY * SIZE) / 2;
     int centerX =0; //(posX * SIZE) / 2;
