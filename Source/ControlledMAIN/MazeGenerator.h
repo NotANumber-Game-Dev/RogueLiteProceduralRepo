@@ -6,11 +6,38 @@
 #include "GameFramework/Actor.h"
 #include "MazeGenerator.generated.h"
 
+
+UENUM()
+enum FBioma
+{
+	none UMETA(DisplayName = "none"),
+	Bottom_Sewer UMETA(DisplayName = "Bottom Sewer"),
+	High_Sewer UMETA(DisplayName = "High Sewer"),
+	City_Suburb UMETA(DisplayName = "City Suburb"),
+	Fabric_Armament UMETA(DisplayName = "Fabric Armament"),
+	Fabric_BIOS UMETA(DisplayName = "Fabric BIOS"),
+	City_Mainstreet UMETA(DisplayName = "City Mainstreet"),
+	BluBuilding_Hall UMETA(DisplayName = "Blu Building Hall"),
+	BluBuilding_Middlefloor UMETA(DisplayName = "Blu Building Middle floor"),
+	BluBuilding_Penthouse UMETA(DisplayName = "Blu Building Penthouse")
+};
+
+USTRUCT()
+struct FBossPosition {
+	GENERATED_BODY()
+	UPROPERTY(EditAnywhere, category = "Load Maps")
+		int x;
+	UPROPERTY(EditAnywhere, category = "Load Maps")
+		int y;
+	
+};
+
 USTRUCT()
 struct FNestetdArray {
 	GENERATED_BODY()
 		UPROPERTY(EditAnywhere, category = "Load Maps")
 		TArray<int>A;
+		
 };
 
 USTRUCT()
@@ -30,20 +57,23 @@ class CONTROLLEDMAIN_API AMazeGenerator : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMazeGenerator();
-	UPROPERTY(EditAnywhere, category = "Load Maps")
+	//UPROPERTY(EditAnywhere, category = "Load Maps")
 		TArray<FString> nameMaps;
 
 	UPROPERTY(EditAnywhere, category = "Load Maps")
 		int sizeSquare;
 	UPROPERTY(EditAnywhere, category = "Load Maps")
 		int SIZE;
+	UPROPERTY(EditAnywhere, category = "Load Maps")
+		TEnumAsByte<FBioma> biomes;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	TArray<FNestetdArray> _maze;
 
-
+	FBossPosition boss;
+	
 	int _posCount;
 	FPos _currentPos;
 	TArray<FPos> _prevPosList;

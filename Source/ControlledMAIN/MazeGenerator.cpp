@@ -4,11 +4,29 @@
 #include "MazeGenerator.h"
 #include "Engine/World.h"
 #include "Engine/LevelStreamingDynamic.h"
+#include "Math/UnrealMathUtility.h"
 
 
 // Sets default values
 AMazeGenerator::AMazeGenerator()
 {
+    nameMaps.SetNum(15);
+    nameMaps[0] = "LM_LEFT_DOWN";
+    nameMaps[1] = "LM_RIGHT_DOWN";
+    nameMaps[2] = "LM_RIGHT_DOWN_LEFT";
+    nameMaps[3] = "LM_RIGHT_LEFT";
+    nameMaps[4] = "LM_TOP_DOWN";
+    nameMaps[5] = "LM_TOP_DOWN_LEFT";
+    nameMaps[6] = "LM_TOP_LEFT";
+    nameMaps[7] = "LM_TOP_RIGHT";
+    nameMaps[8] = "LM_TOP_RIGHT_DOWN";
+    nameMaps[9] = "LM_TOP_RIGHT_DOWN_LEFT";
+    nameMaps[10] = "LM_TOP_RIGHT_LEFT";
+    nameMaps[11] = "LM_TOP";
+    nameMaps[12] = "LM_LEFT";
+    nameMaps[13] = "LM_DOWN";
+    nameMaps[14] = "LM_RIGHT";
+    
     // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
     PrimaryActorTick.bCanEverTick = true;
     _maze.SetNum(SIZE);
@@ -52,11 +70,53 @@ void AMazeGenerator::BeginPlay()
     int posX = sizeSquare * SIZE * SIZE ;
     int posY = sizeSquare * SIZE * SIZE;
 
-    int centerY =0; //(posY * SIZE) / 2;
-    int centerX =0; //(posX * SIZE) / 2;
+    int centerY =0; 
+    int centerX =0; 
 
-    
+    int randX = FMath::RandRange((int)SIZE/4,(int)SIZE);
+    int randY = FMath::RandRange((int)SIZE / 4, (int)SIZE);
 
+    boss.x = randX;
+    boss.y = randY;
+
+    FString aux;
+   
+    switch (biomes) {
+    case Bottom_Sewer:
+        aux = "BS_";
+        break;
+    case High_Sewer:
+        aux = "HS_";
+        break;
+    case City_Suburb:
+        aux = "CS_";
+        break;
+    case Fabric_Armament:
+        aux = "FA_";
+        break;
+    case Fabric_BIOS:
+        aux = "FB_";
+        break;
+    case City_Mainstreet:
+        aux = "CM_";
+        break;
+    case BluBuilding_Hall:
+        aux = "BH_";
+        break;
+    case BluBuilding_Middlefloor:
+        aux = "BM_";
+        break;
+    case BluBuilding_Penthouse:
+        aux = "BP_";
+        break;
+    case none:
+        aux = "";
+        break;
+    default:
+        aux = "";
+        break;
+    }
+    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("HOLAAAA"));
     for (size_t i = 0; i < _maze.Num(); i++)
     {
         for (size_t j = 0; j < _maze[i].A.Num(); j++)
@@ -71,77 +131,108 @@ void AMazeGenerator::BeginPlay()
 
             //TOP
             if (_maze[i].A[j] == 1) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[11], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                aux.Append(nameMaps[11]);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TOP"));
+                //                                  BIOMA_nameMaps[]
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             
             //DOWN
             if (_maze[i].A[j] == 2) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[13], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                aux.Append(nameMaps[13]);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("DOWN"));
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             
             //TOP-DOWN
             if (_maze[i].A[j] == 3) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[4], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                aux.Append(nameMaps[4]);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TOP-DOWN"));
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             
             //RIGHT
             if (_maze[i].A[j] == 4) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[14], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("RIGHT"));
+                aux.Append(nameMaps[14]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             
             //RIGHT-TOP
             if (_maze[i].A[j] == 5) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[7], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("RIGHT-TOP"));
+                aux.Append(nameMaps[7]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             
             //RIGHT-DOWN
             if (_maze[i].A[j] == 6) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[1], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ROGHT-DOWN"));
+                aux.Append(nameMaps[1]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             
             //TOP-DOWN-RIGHT
             if (_maze[i].A[j] == 7) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[8], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TOP-DOWN-RIGHT"));
+                aux.Append(nameMaps[8]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
             
             //LEFT
             if (_maze[i].A[j] == 8) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[12], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("LEFT"));
+                aux.Append(nameMaps[12]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
 
             //TOP-LEFT
             if (_maze[i].A[j] == 9) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[6], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TOP-LEFT"));
+                aux.Append(nameMaps[6]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
 
             //LEFT-DOWN
             if (_maze[i].A[j] == 10) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[0], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("LEFT-DOWN"));
+                aux.Append(nameMaps[0]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
 
             //TOP-DOWN-LEFT
             if (_maze[i].A[j] == 11) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[5], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TOP-DOWN-LEFT"));
+                aux.Append(nameMaps[5]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
 
             //RIGHT-LEFT
             if (_maze[i].A[j] == 12) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[3], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("RIGHT-LEFT"));
+                aux.Append(nameMaps[3]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
 
             //TOP-RIGHT-LEFT
             if (_maze[i].A[j] == 13) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[10], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TOP-RIGHT-LEFT"));
+                aux.Append(nameMaps[10]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
 
             //RIGHT-DOWN-LEFT
             if (_maze[i].A[j] == 14) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[2], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("RIGHT-DOWN-LEFT"));
+                aux.Append(nameMaps[2]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
 
             //TOP-RIGHT-DOWN-LEFT
             if (_maze[i].A[j] == 15) {
-                test->LoadLevelInstance(GetWorld(), nameMaps[9], FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
+                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ALL"));
+                aux.Append(nameMaps[9]);
+                test->LoadLevelInstance(GetWorld(), aux, FVector((posX * i) - centerX, (posY * j) - centerY, 0), FRotator(0, 0, 0), succes);
             }
 
         }
