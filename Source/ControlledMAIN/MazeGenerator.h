@@ -60,10 +60,16 @@ public:
 	//UPROPERTY(EditAnywhere, category = "Load Maps")
 		TArray<FString> nameMaps;
 
+
+
+	//Check the number before, probably scale*100
 	UPROPERTY(EditAnywhere, category = "Load Maps")
 		int sizeSquare;
+
+	//How many squares you want
 	UPROPERTY(EditAnywhere, category = "Load Maps")
 		int SIZE;
+
 	UPROPERTY(EditAnywhere, category = "Load Maps")
 		TEnumAsByte<FBioma> biomes;
 protected:
