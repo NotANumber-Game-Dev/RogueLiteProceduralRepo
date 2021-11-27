@@ -29,6 +29,8 @@ struct FBossPosition {
 		int x;
 	UPROPERTY(EditAnywhere, category = "Load Maps")
 		int y;
+	UPROPERTY(EditAnywhere, category = "Load Maps")
+		int z;
 	
 };
 
@@ -72,6 +74,13 @@ public:
 
 	UPROPERTY(EditAnywhere, category = "Load Maps")
 		TEnumAsByte<FBioma> biomes;
+
+	UFUNCTION(BlueprintPure)
+		FVector getBossPosition();
+
+	UFUNCTION(BlueprintPure)
+		int getSizeSquare();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -96,6 +105,8 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	
 
 	void init();
 	bool isWalOnPos(int x, int y);

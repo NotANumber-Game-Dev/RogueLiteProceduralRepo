@@ -60,6 +60,17 @@ AMazeGenerator::AMazeGenerator()
     _checkedPos = 0;
 }
 
+
+FVector AMazeGenerator::getBossPosition()
+{
+    return FVector(boss.x,boss.y,boss.z);
+}
+
+int AMazeGenerator::getSizeSquare()
+{
+    return sizeSquare;
+}
+
 // Called when the game starts or when spawned
 void AMazeGenerator::BeginPlay()
 {
@@ -80,6 +91,7 @@ void AMazeGenerator::BeginPlay()
 
     boss.x = randX;
     boss.y = randY;
+    boss.z = 400;
 
     FString aux;
    
@@ -131,7 +143,7 @@ void AMazeGenerator::BeginPlay()
     {
         for (size_t j = 0; j < _maze[i].A.Num(); j++)
         {
-            //FALTA POSAR EL namemaps[] correcte
+            
 
             //NORD: 1
             //SOUTH: 2
@@ -380,6 +392,8 @@ void AMazeGenerator::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 
 }
+
+
 void AMazeGenerator::init()
 {
     _maze.SetNum(SIZE);
