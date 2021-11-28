@@ -23,7 +23,7 @@ enum FBioma
 };
 
 USTRUCT()
-struct FBossPosition {
+struct FPosition {
 	GENERATED_BODY()
 	UPROPERTY(EditAnywhere, category = "Load Maps")
 		int x;
@@ -81,13 +81,16 @@ public:
 	UFUNCTION(BlueprintPure)
 		int getSizeSquare();
 
+	
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	TArray<FNestetdArray> _maze;
 
-	FBossPosition boss;
+	FPosition boss;
+	FPosition playerStart;
 	
 	int _posCount;
 	FPos _currentPos;
