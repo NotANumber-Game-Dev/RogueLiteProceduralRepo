@@ -99,8 +99,8 @@ void AMazeGenerator::BeginPlay()
     playerStart.z = 400;
 
 
-    randX = FMath::RandRange((int)SIZE / 2, (int)SIZE);
-    randY = FMath::RandRange((int)SIZE / 2, (int)SIZE);
+    randX = FMath::RandRange((int)SIZE / 2, (int)SIZE - playerStart.x);
+    randY = FMath::RandRange((int)SIZE / 2, (int)SIZE - playerStart.y);
 
     boss.x = randX - playerStart.x;
     boss.y = randY - playerStart.y;
