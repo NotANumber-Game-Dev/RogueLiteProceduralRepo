@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 #include "Item_Granade.h"
+#include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "ItemDatabase.generated.h"
 
 UENUM(BlueprintType)
@@ -47,31 +48,66 @@ struct FItem_Granades : public FItem
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
 	int baseDMG;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		int maxCritDMG;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		float range;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		float timeOfExplosion;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		float timeOfAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		UParticleSystem *particles;
+	
+
+	
 	//UFUNCTION(BlueprintCallable, DeprecationMessage = "Used to cast into")
 	bool isGranade() { return true; }
+	void Update();
 };
 
 USTRUCT(BlueprintType)
 struct FItem_Weapon : public FItem
 {
 	GENERATED_BODY()
-		UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
-		int baseDMG;
+		//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		//Weapon* pWeapon; //FALTA CREAR LA CLASSE
+		
+		
+		bool isWeapon();
 };
+
 USTRUCT(BlueprintType)
 struct FItem_Gadget : public FItem
 {
 	GENERATED_BODY()
-		UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
-		int baseDMG;
+		//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		//Gadget* pGadget; // FALTA CREAR LA CLASSE
+		
+		
+		bool isGadget();
 
 };
+
 USTRUCT(BlueprintType)
 struct FItem_Helpers : public FItem
 {
 	GENERATED_BODY()
 		UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
-		int baseDMG;
+		bool givesVelocity;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		int baseHP;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		int baseVelocity;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Granade")
+		float timeOfUse;
+
+
+	bool isHelper();
 
 };
 /**
