@@ -18,4 +18,9 @@ class CONTROLLEDMAIN_API AControlledGAMEMODE : public AGameMode
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item System")
 		class UItemDatabase* Database;
+
+public:
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Item System")
+		FItem FindItem(FName ItemID, FName TABLE, bool& Succes);
+		FItem FindItem_Implementation(FName ItemID, FName TABLE, bool& Succes);
 };
