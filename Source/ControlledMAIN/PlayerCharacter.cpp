@@ -25,6 +25,19 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 }
 
+
+void APlayerCharacter::AddItem(FName ItemID, FName TableName)
+{
+	for (int i = 0; i < EquipmentInventory.Num(); i++)
+	{
+		if (EquipmentInventory[i].ItemID == ItemID)
+		{
+
+		}
+	}
+}
+
+
 // Called to bind functionality to input
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {

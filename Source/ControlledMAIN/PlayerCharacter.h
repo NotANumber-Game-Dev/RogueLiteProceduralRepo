@@ -35,20 +35,43 @@ protected:
 		TArray<FItem> EquipmentInventory;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-		int32 TotalEquipmentSlots = 6;
+		int32 pesActual = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		int32 pesMaxim = 50;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		int32 indexCurrentlyHandedWeapon = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		int32 indexCurrentlyHandedHelper = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		int32 indexCurrentlyHandedGranade = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		int32 maxSelectedWeaponCount = 3;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		int32 maxIndividualGranadesCount = 3;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		int32 maxSelectedModifiersCount = 4;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		int32 maxSelectedGadgetsCount = 2;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 		bool bHasItemOnHands = false;
 
+	//Array of FNames of items of type // weapon // granade // helper // gadgets
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-		int32 IndexItemOnHands;
-
+		TArray<FName> EquippedWeapons;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-		FName ItemIDOnHands;
+		TArray<FName> EquippedGranade;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		TArray<FName> EquippedHlepers;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		TArray<FName> EquippedGadgets;
 
 public:
-
-	void AddItem(FName ItemID);
+	//Data //Granades // Weapon // Gadget //Helper
+	void AddItem(FName ItemID, FName TableName);
 
 	void RemoveItem(FName ItemID);
 
