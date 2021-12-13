@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level name="LM_DOWN" clustercenter="false">
+	<radius>
+	200
+	</radius>
+	<collisiontracerange>
+	50
+	</collisiontracerange>
+	<meshestospawn>
+	Cube
+	Sphere
+	Cone
+	</meshestospawn>
+	<numberofmeshes>
+	10
+	</numberofmeshes>
+</level>
