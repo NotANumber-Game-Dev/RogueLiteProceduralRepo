@@ -19,6 +19,13 @@ UCLASS()
 class CONTROLLEDMAIN_API UReadXMLLevelDetail : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
+private:
+	static TArray<FXmlNode*> AssetNodes;
+	static TArray<FXmlNode*> ChildNodes;
+	static FString AssetContent;
+	static FString ChildContent;
+
+public:
 	//UE4 reads xml files
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	static void CreateXmlFile();
@@ -26,5 +33,16 @@ class CONTROLLEDMAIN_API UReadXMLLevelDetail : public UBlueprintFunctionLibrary
 	static void ReadXmlFile(const FString& XmlPath);
 
 	//FALTA AFEGIR ELS NODES TAGS I LA RESTA DE COSES COM A UPROPERTIES PERQUE ES PUGUI ACCEDIR
-	
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static void getAssetNodes(TArray<FXmlNode*> &var);
+
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static TArray<FXmlNode*> getChildNodes();
+
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static FString getAssetContent();
+
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static FString getChildContent();
+
 };

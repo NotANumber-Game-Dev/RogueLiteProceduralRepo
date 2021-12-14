@@ -22,16 +22,36 @@ void UReadXMLLevelDetail::ReadXmlFile(const FString& XmlPath)
 {
 	FXmlFile* XmlFile = new FXmlFile(XmlPath);
 	FXmlNode* RootNode = XmlFile->GetRootNode();
-	TArray<FXmlNode*> AssetNodes = RootNode->GetChildrenNodes();
+	AssetNodes = RootNode->GetChildrenNodes();
 	for (FXmlNode* node : AssetNodes)
 	{
-		TArray<FXmlNode*> ChildNodes = node->GetChildrenNodes();
-		FString AssetContent = node->GetContent();
+		ChildNodes = node->GetChildrenNodes();
+		AssetContent = node->GetContent();
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, AssetContent);
 		for (FXmlNode* childNode : ChildNodes)
 		{
-			FString ChildContent = childNode->GetContent();
+			ChildContent = childNode->GetContent();
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, ChildContent);
 		}
 	}
+}
+
+void UReadXMLLevelDetail::getAssetNodes(TArray<FXmlNode*> &var)
+{
+	
+}
+
+TArray<FXmlNode*> UReadXMLLevelDetail::getChildNodes()
+{
+	return ChildNodes;
+}
+
+FString UReadXMLLevelDetail::getAssetContent()
+{
+	return AssetContent;
+}
+
+FString UReadXMLLevelDetail::getChildContent()
+{
+	return ChildContent;
 }
