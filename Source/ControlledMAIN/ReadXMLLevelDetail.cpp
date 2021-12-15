@@ -4,7 +4,7 @@
 #include "ReadXMLLevelDetail.h"
 
 
-
+/*
 void UReadXMLLevelDetail::CreateXmlFile()
 {
 	const FString XmlContent = "<DocumentElement>\n<Infor>\n< ID>xml </ID >\n<Name>file</Name>\n<Content>cccc</Content>\n</Infor>\n</DocumentElement>";
@@ -55,3 +55,4 @@ FString UReadXMLLevelDetail::getChildContent()
 {
 	return ChildContent;
 }
+*/
