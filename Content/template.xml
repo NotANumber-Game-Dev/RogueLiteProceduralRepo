@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <level name="LM_DOWN" clustercenter="false">
+	<theme>
+	none
+	</theme>
 	<radius>
 	200
 	</radius>

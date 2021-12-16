@@ -15,8 +15,17 @@ void UReadXMLLevelDetail::CreateXmlFile()
 		return;
 	}
 	WriteXml->Save(FPaths::ProjectContentDir() + "xml.xml");
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("succeed!"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("succeed!"));
 }
+
+TArray<FString> UReadXMLLevelDetail::ReadTag = TArray<FString>();
+TArray<FString> UReadXMLLevelDetail::ReadChildTag = TArray<FString>();
+TArray<FString> UReadXMLLevelDetail::ReadContent = TArray<FString>();
+TArray<FString> UReadXMLLevelDetail::ReadChildContent = TArray<FString>();
+
+
+
+
 
 void UReadXMLLevelDetail::ReadXmlFile(const FString& XmlPath)
 {
@@ -28,17 +37,41 @@ void UReadXMLLevelDetail::ReadXmlFile(const FString& XmlPath)
 		TArray<FXmlNode*> ChildNodes = node->GetChildrenNodes();
 		FString AssetContent = node->GetContent();
 		FString TagContent = node->GetTag();
-		//ReadTag.Add(TagContent);
-		//ReadContent.Add(AssetContent);
+		ReadTag.Add(TagContent);
+		ReadContent.Add(AssetContent);
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, AssetContent);
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, AssetContent);
 		for (FXmlNode* childNode : ChildNodes)
 		{
 			FString ChildContent = childNode->GetContent();
-			FString ChildTagContent = node->GetTag();
-			//ReadChildContent.Add(ChildContent);
-			//ReadChildTag.Add(ChildTagContent);
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, ChildContent);
+			FString ChildTagContent = childNode->GetTag();
+			ReadChildContent.Add(ChildContent);
+			ReadChildTag.Add(ChildTagContent);
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, ChildContent);
 		}
 	}
+}
+
+void UReadXMLLevelDetail::getTag(TArray<FString>& var)
+{
+	var.Reset(0);
+	var.Append(ReadTag);
+}
+
+void UReadXMLLevelDetail::getChildTag(TArray<FString>& var)
+{
+	var.Reset(0);
+	var.Append(ReadChildTag);
+}
+
+void UReadXMLLevelDetail::getContent(TArray<FString>& var)
+{
+	var.Reset(0);
+	var.Append(ReadContent);
+}
+
+void UReadXMLLevelDetail::getChildContent(TArray<FString>& var)
+{
+	var.Reset(0);
+	var.Append(ReadChildContent);
 }

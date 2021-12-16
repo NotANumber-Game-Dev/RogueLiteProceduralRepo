@@ -21,10 +21,10 @@ class CONTROLLEDMAIN_API UReadXMLLevelDetail : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 private:
-	//static TArray<FString> ReadTag;
-	//static TArray<FString> ReadChildTag;
-	//static TArray<FString> ReadContent;
-	//static TArray<FString> ReadChildContent;
+	 static TArray<FString> ReadTag;
+	 static TArray<FString> ReadChildTag;
+	 static TArray<FString> ReadContent;
+	 static TArray<FString> ReadChildContent;
 
 public:
 	//UE4 reads xml files
@@ -34,5 +34,12 @@ public:
 	static void ReadXmlFile(const FString& XmlPath);
 
 	//FALTA AFEGIR ELS NODES TAGS I LA RESTA DE COSES COM A UPROPERTIES PERQUE ES PUGUI ACCEDIR
-	
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static void getTag(TArray<FString> &var);
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static void getChildTag(TArray<FString>& var);
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static void getContent(TArray<FString>& var);
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static void getChildContent(TArray<FString>& var);
 };
