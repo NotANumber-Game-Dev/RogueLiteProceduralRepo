@@ -19,6 +19,14 @@ UCLASS()
 class CONTROLLEDMAIN_API UReadXMLLevelDetail : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
+
+private:
+	//static TArray<FString> ReadTag;
+	//static TArray<FString> ReadChildTag;
+	//static TArray<FString> ReadContent;
+	//static TArray<FString> ReadChildContent;
+
+public:
 	//UE4 reads xml files
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	static void CreateXmlFile();

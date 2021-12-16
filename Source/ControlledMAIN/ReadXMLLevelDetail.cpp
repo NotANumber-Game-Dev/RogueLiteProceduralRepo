@@ -27,10 +27,17 @@ void UReadXMLLevelDetail::ReadXmlFile(const FString& XmlPath)
 	{
 		TArray<FXmlNode*> ChildNodes = node->GetChildrenNodes();
 		FString AssetContent = node->GetContent();
+		FString TagContent = node->GetTag();
+		//ReadTag.Add(TagContent);
+		//ReadContent.Add(AssetContent);
+
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, AssetContent);
 		for (FXmlNode* childNode : ChildNodes)
 		{
 			FString ChildContent = childNode->GetContent();
+			FString ChildTagContent = node->GetTag();
+			//ReadChildContent.Add(ChildContent);
+			//ReadChildTag.Add(ChildTagContent);
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, ChildContent);
 		}
 	}
