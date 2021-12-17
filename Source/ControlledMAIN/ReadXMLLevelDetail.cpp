@@ -75,3 +75,22 @@ void UReadXMLLevelDetail::getChildContent(TArray<FString>& var)
 	var.Reset(0);
 	var.Append(ReadChildContent);
 }
+
+void UReadXMLLevelDetail::getMeshesToSpawn(TArray<FString>& var)
+{
+	var.Reset(0);
+	//var.Append(ReadChildContent);
+	FString aux;
+	int countIntro=0;
+	for (int i = 0; i < ReadContent[3].Len(); i++) {
+		if (ReadContent[3][i]=='\n') {
+			countIntro++;
+		}
+	}
+
+	for (int i = 0; i < countIntro-1; i++) {
+		aux = ReadContent[3].LeftChop(ReadContent[3].Find("\n"));
+		var.Add(aux);
+	}
+	
+}

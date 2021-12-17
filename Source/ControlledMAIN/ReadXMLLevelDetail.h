@@ -36,10 +36,16 @@ public:
 	//FALTA AFEGIR ELS NODES TAGS I LA RESTA DE COSES COM A UPROPERTIES PERQUE ES PUGUI ACCEDIR
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	static void getTag(TArray<FString> &var);
+
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	static void getChildTag(TArray<FString>& var);
+
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	static void getContent(TArray<FString>& var);
+
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	static void getChildContent(TArray<FString>& var);
+
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static void getMeshesToSpawn(TArray<FString>& var);
 };
