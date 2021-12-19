@@ -76,21 +76,31 @@ void UReadXMLLevelDetail::getChildContent(TArray<FString>& var)
 	var.Append(ReadChildContent);
 }
 
-void UReadXMLLevelDetail::getMeshesToSpawn(TArray<FString>& var)
+void UReadXMLLevelDetail::getMeshesToSpawn(TArray<UStaticMeshComponent*>& var)
 {
 	var.Reset(0);
-	//var.Append(ReadChildContent);
-	FString aux;
-	int countIntro=0;
-	for (int i = 0; i < ReadContent[3].Len(); i++) {
-		if (ReadContent[3][i]=='\n') {
-			countIntro++;
-		}
-	}
+	TArray<FString> objects;
+	ReadContent[3].ParseIntoArray(objects, TEXT(","), false);
+	var.SetNum(objects.Num());
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, objects[0]);
 
-	for (int i = 0; i < countIntro-1; i++) {
-		aux = ReadContent[3].LeftChop(ReadContent[3].Find("\n"));
-		var.Add(aux);
-	}
+
+	//FString Left, Right;
+	//ReadContent[3].Split(TEXT("\n"), &Left, &Right);
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, Right);
+
+	//ConstructorHelpers::FObjectFinder<UStaticMesh> ObjectVisualAsset(TEXT("/Game/StarterContent/Shapes/Shape_Sphere.Shape_Sphere"));
+	//for (int i = 0; i < objects.Num(); i++) {
+	//	ConstructorHelpers::FObjectFinder<UStaticMesh> ObjectVisualAsset((TCHAR*)*objects[i]);
+	//	if (ObjectVisualAsset.Succeeded()) {
+	//		var[i]->SetStaticMesh(ObjectVisualAsset.Object);
+	//	}
+	//	
+	//}
+
+
+
 	
+	//https://cpp.hotexamples.com/examples/constructorhelpers/FObjectFinder/-/cpp-fobjectfinder-class-examples.html
+
 }

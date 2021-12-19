@@ -8,6 +8,8 @@
 #include "Runtime/XmlParser/Public/XmlFile.h"
 #include "Runtime/XmlParser/Public/XmlNode.h"
 
+#include "UObject/ConstructorHelpers.h"
+
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "ReadXMLLevelDetail.generated.h"
@@ -47,5 +49,5 @@ public:
 	static void getChildContent(TArray<FString>& var);
 
 	UFUNCTION(BlueprintCallable, Category = "Test")
-	static void getMeshesToSpawn(TArray<FString>& var);
+	static void getMeshesToSpawn(TArray<UStaticMeshComponent*>& var);
 };
