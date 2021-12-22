@@ -10,6 +10,8 @@
 
 #include "UObject/ConstructorHelpers.h"
 
+#include "GameFramework/Actor.h"
+
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "ReadXMLLevelDetail.generated.h"
@@ -27,6 +29,7 @@ private:
 	 static TArray<FString> ReadChildTag;
 	 static TArray<FString> ReadContent;
 	 static TArray<FString> ReadChildContent;
+	 static TArray<UInstancedStaticMeshComponent*> InstancedMeshes;
 
 public:
 	//UE4 reads xml files
@@ -49,5 +52,6 @@ public:
 	static void getChildContent(TArray<FString>& var);
 
 	UFUNCTION(BlueprintCallable, Category = "Test")
-	static void getMeshesToSpawn(TArray<UStaticMeshComponent*>& var);
+	static void getMeshesToSpawn(TArray<UInstancedStaticMeshComponent*>& var, AActor* root);
+	
 };

@@ -10,7 +10,7 @@
 	50
 	</collisiontracerange>
 	<meshestospawn>
-	Cube,Sphere,Cone
+	Game/Meshes/Cube,Game/Meshes/Sphere,Game/Meshes/Cone
 	</meshestospawn>
 	<numberofmeshes>
 	10

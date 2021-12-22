@@ -22,6 +22,7 @@ TArray<FString> UReadXMLLevelDetail::ReadTag = TArray<FString>();
 TArray<FString> UReadXMLLevelDetail::ReadChildTag = TArray<FString>();
 TArray<FString> UReadXMLLevelDetail::ReadContent = TArray<FString>();
 TArray<FString> UReadXMLLevelDetail::ReadChildContent = TArray<FString>();
+TArray<UInstancedStaticMeshComponent*> UReadXMLLevelDetail::InstancedMeshes= TArray<UInstancedStaticMeshComponent*>();
 
 
 
@@ -76,6 +77,7 @@ void UReadXMLLevelDetail::getChildContent(TArray<FString>& var)
 	var.Append(ReadChildContent);
 }
 
+/*
 void UReadXMLLevelDetail::getMeshesToSpawn(TArray<UStaticMeshComponent*>& var)
 {
 	var.Reset(0);
@@ -97,10 +99,35 @@ void UReadXMLLevelDetail::getMeshesToSpawn(TArray<UStaticMeshComponent*>& var)
 	//	}
 	//	
 	//}
-
-
-
 	
 	//https://cpp.hotexamples.com/examples/constructorhelpers/FObjectFinder/-/cpp-fobjectfinder-class-examples.html
+}
+*/
+void UReadXMLLevelDetail::getMeshesToSpawn(TArray<UInstancedStaticMeshComponent*>& var,AActor* root)
+{
+	//http://www.tomlingames.com/2017/12/simple-random-dungeon-generating-in-ue4-code/
+	//https://answers.unrealengine.com/questions/819149/cooking-uinstancedstaticmeshcomponent-created-at-r.html
+	TArray<FString> objects;
+	ReadContent[3].ParseIntoArray(objects, TEXT(","), false);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, objects[0]);
+	InstancedMeshes.Reset(0);
+	InstancedMeshes.SetNum(objects.Num());
+	//UStaticMesh* floor = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), NULL, TEXT("/Game/Meshes/Floor")));
+		
+	//for (int i = 0; i < InstancedMeshes.Num(); i++)
+	//{
+	//	UStaticMesh* floor = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), NULL, (TCHAR*)*objects[i]));
+	//	InstancedMeshes[i] = NewObject<UInstancedStaticMeshComponent>(root, NAME_None, RF_NeedPostLoad);
+	//	InstancedMeshes[i]->RegisterComponent();
+	//	InstancedMeshes[i]->SetStaticMesh(floor);
+	//	InstancedMeshes[i]->SetCollisionProfileName(TEXT("WorldStatic"));
+	//	InstancedMeshes[i]->SetMobility(EComponentMobility::Static);
+	//	InstancedMeshes[i]->SetFlags(RF_Transactional);
+	//	InstancedMeshes[i]->AttachToComponent(root->GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+	//	InstancedMeshes[i]->RegisterComponent();
+	//	InstancedMeshes[i]->ConditionalPostLoad();
+	//}
 
+	var.Reset(0);
+	var.Append(InstancedMeshes);
 }
