@@ -23,18 +23,6 @@ enum FBioma
 };
 
 USTRUCT()
-struct FPosition {
-	GENERATED_BODY()
-	UPROPERTY(EditAnywhere, category = "Load Maps")
-		int x;
-	UPROPERTY(EditAnywhere, category = "Load Maps")
-		int y;
-	UPROPERTY(EditAnywhere, category = "Load Maps")
-		int z;
-	
-};
-
-USTRUCT()
 struct FNestetdArray {
 	GENERATED_BODY()
 		UPROPERTY(EditAnywhere, category = "Load Maps")
@@ -89,8 +77,8 @@ protected:
 
 	TArray<FNestetdArray> _maze;
 
-	FPosition boss;
-	FPosition playerStart;
+	FVector boss;
+	FVector playerStart;
 	
 	int _posCount;
 	FPos _currentPos;

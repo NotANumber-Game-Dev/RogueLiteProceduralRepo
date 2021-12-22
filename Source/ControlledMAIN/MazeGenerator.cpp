@@ -63,7 +63,7 @@ AMazeGenerator::AMazeGenerator()
 
 FVector AMazeGenerator::getBossPosition()
 {
-    return FVector(boss.x,boss.y,boss.z);
+    return boss;
 }
 
 int AMazeGenerator::getSizeSquare()
@@ -93,18 +93,18 @@ void AMazeGenerator::BeginPlay()
     int randX = FMath::RandRange(0, (int)SIZE / 2);
     int randY = FMath::RandRange(0, (int)SIZE / 2);
 
+    //(randX, randY, 400);
+    playerStart.X = randX;
+    playerStart.Y = randY;
+    playerStart.Z = 400;
 
-    playerStart.x = randX;
-    playerStart.y = randY;
-    playerStart.z = 400;
 
+    randX = FMath::RandRange((int)SIZE / 2, (int)SIZE - (int)playerStart.X);
+    randY = FMath::RandRange((int)SIZE / 2, (int)SIZE - (int)playerStart.Y);
 
-    randX = FMath::RandRange((int)SIZE / 2, (int)SIZE - playerStart.x);
-    randY = FMath::RandRange((int)SIZE / 2, (int)SIZE - playerStart.y);
-
-    boss.x = randX - playerStart.x;
-    boss.y = randY - playerStart.y;
-    boss.z = 400;
+    boss.X = randX - playerStart.X;
+    boss.Y = randY - playerStart.Y;
+    boss.Z = 400;
 
     FString aux;
    
@@ -151,8 +151,8 @@ void AMazeGenerator::BeginPlay()
         nameMaps[i].InsertAt(0, aux);
     }
 
-    float rX=((float)playerStart.x * sizeSquare);
-    float rY= ((float)playerStart.y * sizeSquare);
+    float rX=((float)playerStart.X * sizeSquare);
+    float rY= ((float)playerStart.Y * sizeSquare);
 
     //GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("HOLAAAA"));
     for (size_t i = 0; i < _maze.Num(); i++)
