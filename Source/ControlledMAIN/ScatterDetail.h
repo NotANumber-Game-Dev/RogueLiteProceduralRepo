@@ -19,10 +19,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	TArray<FString> instancedMeshes;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 
 	//AQUI HE DE FER LA LECTURA I CREAR INSTANCEDMESHES
+
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	void setInstancedMeshes(TArray<UInstancedStaticMeshComponent*>& var);
 };
