@@ -41,13 +41,13 @@ void AScatterDetail::setInstancedMeshes(TArray<UInstancedStaticMeshComponent*>& 
 	for (int i = 0; i < var.Num(); i++)
 	{
 		UStaticMesh* floor = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), NULL, (TCHAR*)*instancedMeshes[i]));
-		var[i] = NewObject<UInstancedStaticMeshComponent>(this, NAME_None, RF_NeedPostLoad);
-		var[i]->RegisterComponent();
+		var[i] = NewObject<UInstancedStaticMeshComponent>(this, (TCHAR*)*instancedMeshes[i], RF_NeedLoad); // RF_NeedPostLoad
+		//var[i]->RegisterComponent();
 		var[i]->SetStaticMesh(floor);
 		var[i]->SetCollisionProfileName(TEXT("WorldStatic"));
 		var[i]->SetMobility(EComponentMobility::Static);
-		var[i]->SetFlags(RF_Transactional);
 		var[i]->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+		//var[i]->SetFlags(RF_Transactional);
 		var[i]->RegisterComponent();
 		var[i]->ConditionalPostLoad();
 	}

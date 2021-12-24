@@ -30,4 +30,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	void setInstancedMeshes(TArray<UInstancedStaticMeshComponent*>& var);
+
+
+
 };

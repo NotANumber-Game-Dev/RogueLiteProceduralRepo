@@ -30,6 +30,7 @@ private:
 	 static TArray<FString> ReadContent;
 	 static TArray<FString> ReadChildContent;
 	 static TArray<FString> StringInstancedMeshes;
+	 static TArray<FString> StringRootAttributes;
 	 //static TArray<UInstancedStaticMeshComponent*> InstancedMeshes;
 
 public:
@@ -54,5 +55,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	static void getMeshesToSpawn(TArray<FString>& var);
+
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static void getRootAttributes(TArray<FString>& var);
 	
 };
