@@ -29,7 +29,9 @@ private:
 	 static TArray<FString> ReadChildTag;
 	 static TArray<FString> ReadContent;
 	 static TArray<FString> ReadChildContent;
-	 static TArray<UInstancedStaticMeshComponent*> InstancedMeshes;
+	 static TArray<FString> StringInstancedMeshes;
+	 static TArray<FString> StringRootAttributes;
+	 //static TArray<UInstancedStaticMeshComponent*> InstancedMeshes;
 
 public:
 	//UE4 reads xml files
@@ -52,6 +54,9 @@ public:
 	static void getChildContent(TArray<FString>& var);
 
 	UFUNCTION(BlueprintCallable, Category = "Test")
-	static void getMeshesToSpawn(TArray<UInstancedStaticMeshComponent*>& var, AActor* root);
+	static void getMeshesToSpawn(TArray<FString>& var);
+
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	static void getRootAttributes(TArray<FString>& var);
 	
 };
