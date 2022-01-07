@@ -12,6 +12,7 @@ enum class Type : uint8 {
 	Sniper  UMETA(DisplayName = "Francotirador"),
 	Melee UMETA(DisplayName = "Cuerpo a cuerpo"),
 	MidRange UMETA(DisplayName = "Fusiles"),
+	Boss UMETA(DisplayName = "Boss"),
 };
 
 //Primeras armes seran cos a cos - seguents seran fusils  i per ultim snipers

@@ -69,7 +69,8 @@ public:
 	UFUNCTION(BlueprintPure)
 		int getSizeSquare();
 
-	
+	UFUNCTION(BlueprintCallable)
+		void setBiomes(FString bioma);
 
 protected:
 	// Called when the game starts or when spawned

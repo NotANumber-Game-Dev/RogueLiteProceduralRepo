@@ -72,6 +72,43 @@ int AMazeGenerator::getSizeSquare()
 }
 
 
+void AMazeGenerator::setBiomes(FString bioma)
+{
+    
+    if (bioma.Equals("none")) {
+        biomes = none;
+    }
+    else if (bioma.Equals("Bottom Sewer")) {
+        biomes = Bottom_Sewer;
+    }
+    else if (bioma.Equals("High Sewer")) {
+        biomes = High_Sewer;
+    }
+    else if (bioma.Equals("City Suburb")) {
+        biomes = City_Suburb;
+    }
+    else if (bioma.Equals("Fabric Armament")) {
+        biomes = Fabric_Armament;
+    }
+    else if (bioma.Equals("Fabric BIOS")) {
+        biomes = Fabric_BIOS;
+    }
+    else if (bioma.Equals("City Mainstreet")) {
+        biomes = City_Mainstreet;
+    }
+    else if (bioma.Equals("Blu Building Hall")) {
+        biomes = BluBuilding_Hall;
+    }
+    else if (bioma.Equals("Blu Building Middle floor")) {
+        biomes = BluBuilding_Middlefloor;
+    }
+    else if (bioma.Equals("Blu Building Penthouse")) {
+        biomes = BluBuilding_Penthouse;
+    }
+    
+}
+
+
 
 // Called when the game starts or when spawned
 void AMazeGenerator::BeginPlay()
