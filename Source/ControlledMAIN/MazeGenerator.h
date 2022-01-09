@@ -94,6 +94,9 @@ protected:
 	void addToCount(int i);
 	void canContinue(int x, int y);
 
+
+	TArray<FString> XMLContent;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -101,5 +104,6 @@ public:
 	
 
 	void init();
+	void RenderLevels();
 	bool isWalOnPos(int x, int y);
 };
