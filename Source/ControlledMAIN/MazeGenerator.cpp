@@ -34,7 +34,7 @@ AMazeGenerator::AMazeGenerator()
     nameMaps[13] = "LM_DOWN";
     nameMaps[14] = "LM_RIGHT";
 
-    SIZE = 10;
+    SIZE = 5;
     sizeSquare = 2600;
 
     _maze.SetNum(SIZE);
