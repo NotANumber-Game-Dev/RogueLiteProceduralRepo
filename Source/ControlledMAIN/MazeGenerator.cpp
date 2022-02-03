@@ -70,8 +70,14 @@ AMazeGenerator::AMazeGenerator()
     UReadXMLLevelDetail::ReadXmlFile(FPaths::ProjectContentDir() + "template.xml");
 
     UReadXMLLevelDetail::getContent(XMLContent);
-
-    setBiomes(XMLContent[0]);
+    if (XMLContent.IsValidIndex(0))
+    {
+        setBiomes(XMLContent[0]);
+    }
+    else
+    {
+        setBiomes("Bottom Sewer");
+    }
 
     RenderLevels();
 }

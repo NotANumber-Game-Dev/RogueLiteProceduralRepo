@@ -31,7 +31,12 @@ void UReadXMLLevelDetail::ReadXmlFile(const FString& XmlPath)
 {
 	FXmlFile* XmlFile = new FXmlFile(XmlPath);
 	FXmlNode* RootNode = XmlFile->GetRootNode();
-	TArray<FXmlAttribute> RootAttributes = RootNode->GetAttributes();
+	TArray<FXmlAttribute> RootAttributes;
+	if (RootNode == nullptr)
+	{
+		return;
+	}
+	RootAttributes = RootNode->GetAttributes();
 	for (int i = 0; i < RootAttributes.Num(); i++)
 	{
 		StringRootAttributes.Add(RootAttributes[i].GetValue());
