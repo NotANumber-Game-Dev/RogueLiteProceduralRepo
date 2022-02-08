@@ -125,4 +125,5 @@ void UDATABASE::CheckAndUpdateQuests()
 			DoesntHaveAllObjectivesDone = false;
 		}
 	}
+	UpdateData.Broadcast();
 }

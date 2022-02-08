@@ -111,6 +111,10 @@ public:
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDataUpdated);
+
+
 UCLASS(BlueprintType,Blueprintable)
 class CONTROLLEDMAIN_API UDATABASE : public UObject
 {
@@ -144,4 +148,7 @@ public:
 	
 	void CheckAndUpdateQuests();
 
+	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
+	FDataUpdated UpdateData;
+	
 };
