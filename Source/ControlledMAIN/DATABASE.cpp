@@ -23,6 +23,7 @@ void UDATABASE::AddEnemiesKilledCounter()
 	{
 		pair.Value++;
 	}
+	CheckAndUpdateQuests();
 }
 
 void UDATABASE::SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator, int Current_Quest, int Amount)
@@ -64,8 +65,6 @@ void UDATABASE::SetStateQuest(const TSubclassOf<AActor> &Instigator, int QuestIn
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned))
 		{
 			DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State = inState;
-
-			UE_LOG(LogTemp,Warning,TEXT("%s"),*UEnum::GetDisplayValueAsText(DATABASE_QUEST_LIST[i].Quest_List[QuestIndex].State).ToString());
 		}
 	}
 }
