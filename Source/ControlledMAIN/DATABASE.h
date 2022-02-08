@@ -133,15 +133,15 @@ public:
 	void AddEnemiesKilledCounter();
 
 	UFUNCTION(BlueprintCallable)
-	void SetCounterForEnemiesKilled(TSubclassOf<AActor> Instigator, int Current_Quest, int Amount = 0);
+	void SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator, int Current_Quest, int Amount = 0);
 
 	UFUNCTION(BlueprintCallable)
-	void GetNextQuest(TSubclassOf<AActor> Instigator, bool &noMoreMisions);
+	void GetNextQuest(const TSubclassOf<AActor> &Instigator, bool &noMoreMisions);
 
 	UFUNCTION(BlueprintCallable)
-	void SetStateQuest(TSubclassOf<AActor> Instigator,int QuestIndex, EQuest_State inState);
+	void SetStateQuest(const TSubclassOf<AActor> &Instigator,int QuestIndex, EQuest_State inState);
 	
 	
 	void CheckAndUpdateQuests();
-	void SetObjectiveToComplete(FQuest &questToCheck, int IndexOfObjective);
+
 };

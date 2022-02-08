@@ -3,13 +3,16 @@
 
 #include "DATABASE.h"
 
+#include "Engine/Engine.h"
+#include "GameFramework/Actor.h"
+
 void UDATABASE::Start()
 {
-	for (int i = 0; i< DATABASE_QUEST_LIST.Num();i++)
+	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++)
 	{
-		for (int x = 0; x< DATABASE_QUEST_LIST[i].Quest_List.Num();x++)
+		for (int x = 0; x < DATABASE_QUEST_LIST[i].Quest_List.Num(); x++)
 		{
-			DATABASE_QUEST_LIST[i].Quest_List[x].ID = ((1000*i)+x);
+			DATABASE_QUEST_LIST[i].Quest_List[x].ID = ((1000 * i) + x);
 		}
 	}
 }
@@ -17,27 +20,27 @@ void UDATABASE::Start()
 void UDATABASE::AddEnemiesKilledCounter()
 {
 	for (TPair<int32, int32>& pair : CounterEnemiesKilled)
-	{      
-		pair.Value++;  
-	} 
+	{
+		pair.Value++;
+	}
 }
 
-void UDATABASE::SetCounterForEnemiesKilled(TSubclassOf<AActor> Instigator, int Current_Quest, int Amount)
+void UDATABASE::SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator, int Current_Quest, int Amount)
 {
-	for (int i = 0; i< DATABASE_QUEST_LIST.Num();i++)
+	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++)
 	{
-		if (DATABASE_QUEST_LIST[i].Actor_Assigned->GetClass() == Instigator->GetClass() )
+		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned))
 		{
-			CounterEnemiesKilled.Add(DATABASE_QUEST_LIST[i].Quest_List[Current_Quest].ID,Amount);
+			CounterEnemiesKilled.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
 		}
 	}
 }
 
-void UDATABASE::GetNextQuest(TSubclassOf<AActor> Instigator, bool& noMoreMisions)
+void UDATABASE::GetNextQuest(const TSubclassOf<AActor> &Instigator, bool& noMoreMisions)
 {
-	for (int i = 0; i< DATABASE_QUEST_LIST.Num();i++)
+	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++)
 	{
-		if (DATABASE_QUEST_LIST[i].Actor_Assigned->GetClass() == Instigator->GetClass() )
+		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned))
 		{
 			if (DATABASE_QUEST_LIST[i].Quest_List.Num() > DATABASE_QUEST_LIST[i].Mission_Index + 1)
 			{
@@ -54,27 +57,73 @@ void UDATABASE::GetNextQuest(TSubclassOf<AActor> Instigator, bool& noMoreMisions
 	}
 }
 
-void UDATABASE::SetStateQuest(TSubclassOf<AActor> Instigator, int QuestIndex, EQuest_State inState)
+void UDATABASE::SetStateQuest(const TSubclassOf<AActor> &Instigator, int QuestIndex, EQuest_State inState)
 {
-	for (int i = 0; i< DATABASE_QUEST_LIST.Num();i++)
+	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++)
 	{
-		if (DATABASE_QUEST_LIST[i].Actor_Assigned->GetClass() == Instigator->GetClass() )
+		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned))
 		{
-			DATABASE_QUEST_LIST[i].Quest_List[QuestIndex].State = inState;
-			if(GEngine)
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow,
-					*UEnum::GetDisplayValueAsText(DATABASE_QUEST_LIST[i].Quest_List[QuestIndex].State).ToString());
+			DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State = inState;
+
+			UE_LOG(LogTemp,Warning,TEXT("%s"),*UEnum::GetDisplayValueAsText(DATABASE_QUEST_LIST[i].Quest_List[QuestIndex].State).ToString());
 		}
 	}
 }
 
 void UDATABASE::CheckAndUpdateQuests()
 {
-	
-}
-
-void UDATABASE::SetObjectiveToComplete(FQuest& questToCheck, int IndexOfObjective)
-{
-	questToCheck.isCompleted = true;
-	questToCheck.Objectives[IndexOfObjective].IsCompleted = true;
+	bool DoesntHaveAllObjectivesDone = false;
+	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) ///Get Database
+		{
+		for (int x = 0; x < DATABASE_QUEST_LIST[i].Quest_List.Num(); x++) //Get quests
+		{
+			switch (DATABASE_QUEST_LIST[i].Quest_List[x].State)
+			{
+			default:
+				break;
+			case EQuest_State::Grabbed:
+				for (int y = 0; y < DATABASE_QUEST_LIST[i].Quest_List[x].Objectives.Num(); y++) //Get Objectives
+					{
+					switch (DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].Type)
+					{
+					default:
+						break;
+					case EQuest_Objective_Type::KILL_N_ENEMIES:
+						 int32 temp = *CounterEnemiesKilled.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID);
+						if(temp
+							>= DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_Kill_Amount)
+						{
+							DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
+						}
+						break;
+						//ADD Other Types here
+					}
+				}
+				break;
+				//ADD HERE IF QUEST ISN'T GRABBED
+			}
+		}
+		
+		//Check Objectives are done to complete Quest
+		for (int x = 0; x < DATABASE_QUEST_LIST[i].Quest_List.Num(); x++) //Get quests
+		{
+			for (int y = 0; y < DATABASE_QUEST_LIST[i].Quest_List[x].Objectives.Num(); y++) //Get Objectives
+			{
+				if (!DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted )
+				{
+					DoesntHaveAllObjectivesDone = true;
+				}
+			}
+			if (!DoesntHaveAllObjectivesDone)
+			{
+				DATABASE_QUEST_LIST[i].Quest_List[x].isCompleted = true;
+				UE_LOG(LogTemp,Warning,TEXT("Mission Completed"));
+			}
+			else
+			{
+				UE_LOG(LogTemp,Warning,TEXT("Mission Uncompleted"));
+			}
+			DoesntHaveAllObjectivesDone = false;
+		}
+	}
 }

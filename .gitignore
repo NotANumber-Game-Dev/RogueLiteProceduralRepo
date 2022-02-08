@@ -76,3 +76,4 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 RogueLiteProceduralRepo.zip
 *.fbx
+*.cpp~
