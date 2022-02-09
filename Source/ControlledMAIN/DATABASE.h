@@ -90,7 +90,7 @@ public:
 	TEnumAsByte <EQuest_Story_Priority> Priority;
 
 	UPROPERTY(BlueprintReadWrite,EditAnywhere, meta = (TitleProperty = "ID"))
-	TEnumAsByte <EQuest_State> State;
+	TEnumAsByte <EQuest_State> State = EQuest_State::Not_Grabbed;
 };
 
 USTRUCT(BlueprintType,Blueprintable)
@@ -123,11 +123,16 @@ class CONTROLLEDMAIN_API UDATABASE : public UObject
 protected:
 	bool debug;
 	
+public:
+	
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (TitleProperty = "Database Quest (Enemies N Killed)"))
 	TMap<int32,int32> CounterEnemiesKilled;
 
-public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,meta = (TitleProperty = "Database Quest List"))
 	TArray<FNPC_Quest_List> DATABASE_QUEST_LIST;
+
+		TArray<FNPC_Quest_List> STARTGAMECOPY_DATABASE_QUEST_LIST;
+
 
 	UFUNCTION(BlueprintCallable)
 	void Start();
@@ -135,7 +140,11 @@ public:
 	///Adds 1 to all quests that are kill any Enemies
 	UFUNCTION(BlueprintCallable)
 	void AddEnemiesKilledCounter();
-
+	
+	///For New Game, in case player went back to the menu and started a new game having progress on a previous one
+	UFUNCTION(BlueprintCallable)
+	void ResetCurrentLaodedProggress();
+	
 	UFUNCTION(BlueprintCallable)
 	void SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator, int Current_Quest, int Amount = 0);
 

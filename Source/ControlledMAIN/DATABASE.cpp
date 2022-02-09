@@ -15,15 +15,21 @@ void UDATABASE::Start()
 			DATABASE_QUEST_LIST[i].Quest_List[x].ID = ((1000 * i) + x);
 		}
 	}
+	STARTGAMECOPY_DATABASE_QUEST_LIST = DATABASE_QUEST_LIST;
 }
 
 void UDATABASE::AddEnemiesKilledCounter()
 {
 	for (TPair<int32, int32>& pair : CounterEnemiesKilled)
 	{
-		pair.Value++;
+		pair.Value = pair.Value+1;
 	}
 	CheckAndUpdateQuests();
+}
+
+void UDATABASE::ResetCurrentLaodedProggress()
+{
+	DATABASE_QUEST_LIST = STARTGAMECOPY_DATABASE_QUEST_LIST;
 }
 
 void UDATABASE::SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator, int Current_Quest, int Amount)
@@ -46,6 +52,7 @@ void UDATABASE::GetNextQuest(const TSubclassOf<AActor> &Instigator, bool& noMore
 			if (DATABASE_QUEST_LIST[i].Quest_List.Num() > DATABASE_QUEST_LIST[i].Mission_Index + 1)
 			{
 				DATABASE_QUEST_LIST[i].Mission_Index = DATABASE_QUEST_LIST[i].Mission_Index + 1;
+				DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State = EQuest_State::Grabbed;
 				noMoreMisions = false;
 				return;
 			}
@@ -56,6 +63,7 @@ void UDATABASE::GetNextQuest(const TSubclassOf<AActor> &Instigator, bool& noMore
 			}
 		}
 	}
+	UpdateData.Broadcast();
 }
 
 void UDATABASE::SetStateQuest(const TSubclassOf<AActor> &Instigator, int QuestIndex, EQuest_State inState)
@@ -115,7 +123,7 @@ void UDATABASE::CheckAndUpdateQuests()
 			}
 			if (!DoesntHaveAllObjectivesDone)
 			{
-				DATABASE_QUEST_LIST[i].Quest_List[x].isCompleted = true;
+				DATABASE_QUEST_LIST[i].Quest_List[x].State = EQuest_State::Complete;
 				UE_LOG(LogTemp,Warning,TEXT("Mission Completed"));
 			}
 			else
