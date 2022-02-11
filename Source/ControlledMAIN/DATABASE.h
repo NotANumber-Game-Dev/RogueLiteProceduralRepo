@@ -128,6 +128,10 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (TitleProperty = "Database Quest (Enemies N Killed)"))
 	TMap<int32,int32> CounterEnemiesKilled;
 
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (TitleProperty = "Database Quest (Recolection Item)"))
+	TMap<int32, int32> CounterRecolectionItem;
+
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,meta = (TitleProperty = "Database Quest List"))
 	TArray<FNPC_Quest_List> DATABASE_QUEST_LIST;
 
@@ -147,6 +151,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator, int Current_Quest, int Amount = 0);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCounterForRecolectionItems(const TSubclassOf<AActor>& Instigator, int Current_Quest, int Amount = 0);
 
 	UFUNCTION(BlueprintCallable)
 	void GetNextQuest(const TSubclassOf<AActor> &Instigator, bool &noMoreMisions);

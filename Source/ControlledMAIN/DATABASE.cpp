@@ -43,6 +43,15 @@ void UDATABASE::SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator
 	}
 }
 
+void UDATABASE::SetCounterForRecolectionItems(const TSubclassOf<AActor>& Instigator, int Current_Quest, int Amount)
+{
+	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) {
+		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned)) {
+			CounterRecolectionItem.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+		}
+	}
+}
+
 void UDATABASE::GetNextQuest(const TSubclassOf<AActor> &Instigator, bool& noMoreMisions)
 {
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++)
