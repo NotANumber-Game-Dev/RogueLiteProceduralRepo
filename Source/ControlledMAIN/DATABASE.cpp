@@ -29,8 +29,11 @@ void UDATABASE::AddEnemiesKilledCounter()
 
 void UDATABASE::AddRecolectionItem(int quantity)
 {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("quantity %d"), quantity));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("CounterRecolectionItem %d"), CounterRecolectionItem.Num()));
 	for (TPair<int32, int32>& pair : CounterRecolectionItem)
 	{
+		
 		pair.Value += quantity;
 	}
 	CheckAndUpdateQuests();
@@ -135,7 +138,10 @@ void UDATABASE::CheckAndUpdateQuests()
 							if (CounterRecolectionItem.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID)!=nullptr) {
 								recolection = *CounterRecolectionItem.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID);
 							}
+							//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("recolection %d"), recolection));
+							//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("recollect amount %d"), DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_recollect_Amount));
 							if (recolection>= DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_recollect_Amount) {
+								
 								DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
 							}
 							break;
