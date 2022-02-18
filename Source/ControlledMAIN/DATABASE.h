@@ -144,6 +144,9 @@ public:
 	///Adds 1 to all quests that are kill any Enemies
 	UFUNCTION(BlueprintCallable)
 	void AddEnemiesKilledCounter();
+
+	UFUNCTION(BlueprintCallable)
+	void AddRecolectionItem(int quantity);
 	
 	///For New Game, in case player went back to the menu and started a new game having progress on a previous one
 	UFUNCTION(BlueprintCallable)

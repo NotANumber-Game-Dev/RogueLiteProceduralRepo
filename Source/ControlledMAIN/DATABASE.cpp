@@ -27,6 +27,15 @@ void UDATABASE::AddEnemiesKilledCounter()
 	CheckAndUpdateQuests();
 }
 
+void UDATABASE::AddRecolectionItem(int quantity)
+{
+	for (TPair<int32, int32>& pair : CounterRecolectionItem)
+	{
+		pair.Value += quantity;
+	}
+	CheckAndUpdateQuests();
+}
+
 void UDATABASE::ResetCurrentLaodedProggress()
 {
 	DATABASE_QUEST_LIST = STARTGAMECOPY_DATABASE_QUEST_LIST;
@@ -52,6 +61,8 @@ void UDATABASE::SetCounterForRecolectionItems(const TSubclassOf<AActor>& Instiga
 	}
 }
 
+
+//TODO comprovar si la quest s'ha fet, llavors donar nova missió. Mirar que no sigui negatiu
 void UDATABASE::GetNextQuest(const TSubclassOf<AActor> &Instigator, bool& noMoreMisions)
 {
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++)
@@ -89,6 +100,7 @@ void UDATABASE::SetStateQuest(const TSubclassOf<AActor> &Instigator, int QuestIn
 void UDATABASE::CheckAndUpdateQuests()
 {
 	bool DoesntHaveAllObjectivesDone = false;
+
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) ///Get Database
 		{
 		for (int x = 0; x < DATABASE_QUEST_LIST[i].Quest_List.Num(); x++) //Get quests
@@ -100,19 +112,33 @@ void UDATABASE::CheckAndUpdateQuests()
 			case EQuest_State::Grabbed:
 				for (int y = 0; y < DATABASE_QUEST_LIST[i].Quest_List[x].Objectives.Num(); y++) //Get Objectives
 					{
+					int32 recolection = 0;
+					int32 nEnemiesKilled = 0;
 					switch (DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].Type)
 					{
-					default:
-						break;
-					case EQuest_Objective_Type::KILL_N_ENEMIES:
-						 int32 temp = *CounterEnemiesKilled.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID);
-						if(temp
-							>= DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_Kill_Amount)
-						{
-							DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
-						}
-						break;
-						//ADD Other Types here
+						default:
+							break;
+						case EQuest_Objective_Type::KILL_N_ENEMIES:
+							
+							if (CounterEnemiesKilled.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID)!=nullptr) {
+								nEnemiesKilled = *CounterEnemiesKilled.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID);
+							}
+											
+							if(nEnemiesKilled
+								>= DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_Kill_Amount)
+							{
+								DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
+							}
+							break;
+							//ADD Other Types here
+						case EQuest_Objective_Type::RECOLECCTION:
+							if (CounterRecolectionItem.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID)!=nullptr) {
+								recolection = *CounterRecolectionItem.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID);
+							}
+							if (recolection>= DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_recollect_Amount) {
+								DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
+							}
+							break;
 					}
 				}
 				break;
