@@ -146,7 +146,7 @@ public:
 	void AddEnemiesKilledCounter();
 
 	UFUNCTION(BlueprintCallable)
-	void AddRecolectionItem(int quantity);
+	void AddRecolectionItem(const TSubclassOf<AActor>& Item,int quantity);
 	
 	///For New Game, in case player went back to the menu and started a new game having progress on a previous one
 	UFUNCTION(BlueprintCallable)

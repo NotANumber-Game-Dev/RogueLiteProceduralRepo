@@ -27,14 +27,27 @@ void UDATABASE::AddEnemiesKilledCounter()
 	CheckAndUpdateQuests();
 }
 
-void UDATABASE::AddRecolectionItem(int quantity)
+void UDATABASE::AddRecolectionItem(const TSubclassOf<AActor>& Item,int quantity)
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("quantity %d"), quantity));
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("CounterRecolectionItem %d"), CounterRecolectionItem.Num()));
 	for (TPair<int32, int32>& pair : CounterRecolectionItem)
 	{
-		
-		pair.Value += quantity;
+		//mirem misssions
+		for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) ///Get Database
+		{
+			//miro
+			for (int x = 0; x < DATABASE_QUEST_LIST[i].Quest_List.Num(); x++) //Get quests
+			{
+				if (DATABASE_QUEST_LIST[i].Quest_List[x].State == EQuest_State::Grabbed) {
+					for (int y = 0; y < DATABASE_QUEST_LIST[i].Quest_List[x].Objectives.Num(); y++) {
+						if (Item->IsChildOf(DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_recollect)) {
+							pair.Value += quantity;
+						}
+					}
+				}
+			}
+		}
 	}
 	CheckAndUpdateQuests();
 }
