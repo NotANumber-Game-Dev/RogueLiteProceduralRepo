@@ -53,7 +53,7 @@ public:
 	int32 What_to_recollect_Amount; //RECOLECCTION
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,meta = (TitleProperty = "What to interact"))
-	TSubclassOf<AActor> What_to_Interact; //INTERACT_WITH_OBJECT Has to be BP_Quest_Interactuable
+	TSubclassOf<AActor> What_to_Interact; //INTERACT_WITH_OBJECT Has to be BP_Interactuable_Item_quest
 	
 	UPROPERTY(BlueprintReadWrite,EditAnywhere, meta = (TitleProperty = "What to kill"))
 	TSubclassOf<AActor> What_to_Kill; //KILL_N_ENEMIES_SPECIFIC Has to be BP_ENEMY
@@ -131,6 +131,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (TitleProperty = "Database Quest (Recolection Item)"))
 	TMap<int32, int32> CounterRecolectionItem;
 
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (TitleProperty = "Database Quest (Recolection Item)"))
+	TMap<int32, bool> CounterInteractWithObject;
+
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,meta = (TitleProperty = "Database Quest List"))
 	TArray<FNPC_Quest_List> DATABASE_QUEST_LIST;
@@ -147,6 +150,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void AddRecolectionItem(const TSubclassOf<AActor>& Item,int quantity);
+
+	UFUNCTION(BlueprintCallable)
+	void AddInteractWithItem(const TSubclassOf<AActor>& Item);
+
 	
 	///For New Game, in case player went back to the menu and started a new game having progress on a previous one
 	UFUNCTION(BlueprintCallable)
@@ -157,6 +164,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetCounterForRecolectionItems(const TSubclassOf<AActor>& Instigator, int Current_Quest, int Amount = 0);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCounterForInteractWithItem(const TSubclassOf<AActor>& Instigator, int Current_Quest, bool isInteracted=false);
 
 	UFUNCTION(BlueprintCallable)
 	void GetNextQuest(const TSubclassOf<AActor> &Instigator, bool &noMoreMisions);

@@ -29,8 +29,6 @@ void UDATABASE::AddEnemiesKilledCounter()
 
 void UDATABASE::AddRecolectionItem(const TSubclassOf<AActor>& Item,int quantity)
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("quantity %d"), quantity));
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("CounterRecolectionItem %d"), CounterRecolectionItem.Num()));
 	for (TPair<int32, int32>& pair : CounterRecolectionItem)
 	{
 		//mirem misssions
@@ -43,6 +41,29 @@ void UDATABASE::AddRecolectionItem(const TSubclassOf<AActor>& Item,int quantity)
 					for (int y = 0; y < DATABASE_QUEST_LIST[i].Quest_List[x].Objectives.Num(); y++) {
 						if (Item->IsChildOf(DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_recollect)) {
 							pair.Value += quantity;
+						}
+					}
+				}
+			}
+		}
+	}
+	CheckAndUpdateQuests();
+}
+
+void UDATABASE::AddInteractWithItem(const TSubclassOf<AActor>& Item)
+{
+	
+	for (TPair<int32, bool>& pair : CounterInteractWithObject)
+	{
+		//mirem misssions
+		for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) ///Get Database
+		{
+			for (int x = 0; x < DATABASE_QUEST_LIST[i].Quest_List.Num(); x++) //Get quests
+			{
+				if (DATABASE_QUEST_LIST[i].Quest_List[x].State == EQuest_State::Grabbed) {
+					for (int y = 0; y < DATABASE_QUEST_LIST[i].Quest_List[x].Objectives.Num(); y++) {
+						if (Item->IsChildOf(DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_Interact)) {
+							pair.Value = true;
 						}
 					}
 				}
@@ -73,6 +94,15 @@ void UDATABASE::SetCounterForRecolectionItems(const TSubclassOf<AActor>& Instiga
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) {
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned)) {
 			CounterRecolectionItem.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+		}
+	}
+}
+
+void UDATABASE::SetCounterForInteractWithItem(const TSubclassOf<AActor>& Instigator, int Current_Quest, bool isInteracted)
+{
+	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) {
+		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned)) {
+			CounterInteractWithObject.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, isInteracted);
 		}
 	}
 }
@@ -130,6 +160,7 @@ void UDATABASE::CheckAndUpdateQuests()
 					{
 					int32 recolection = 0;
 					int32 nEnemiesKilled = 0;
+					bool isInteracted = false;
 					switch (DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].Type)
 					{
 						default:
@@ -151,10 +182,18 @@ void UDATABASE::CheckAndUpdateQuests()
 							if (CounterRecolectionItem.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID)!=nullptr) {
 								recolection = *CounterRecolectionItem.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID);
 							}
-							//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("recolection %d"), recolection));
-							//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("recollect amount %d"), DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_recollect_Amount));
+							
 							if (recolection>= DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_recollect_Amount) {
 								
+								DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
+							}
+							break;
+						case EQuest_Objective_Type::INTERACT_WITH_OBJECT:
+							if (CounterInteractWithObject.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID) != nullptr) {
+								isInteracted=*CounterInteractWithObject.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID);
+							}
+
+							if (isInteracted) {
 								DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
 							}
 							break;
