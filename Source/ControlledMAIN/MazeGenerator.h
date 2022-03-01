@@ -53,14 +53,14 @@ public:
 
 
 	//Check the number before, probably scale*100
-	UPROPERTY(EditAnywhere, category = "Load Maps")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, category = "Load Maps")
 		int sizeSquare;
 
 	//How many squares you want
-	UPROPERTY(EditAnywhere, category = "Load Maps")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, category = "Load Maps")
 		int SIZE;
 
-	UPROPERTY(EditAnywhere, category = "Load Maps")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, category = "Load Maps")
 		TEnumAsByte<FBioma> biomes;
 
 	UFUNCTION(BlueprintPure)
@@ -71,6 +71,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void setBiomes(FString bioma);
+
+	UFUNCTION(BlueprintCallable)
+		void getRoomOrentation(float _x, float _y, int &id_sala, int &posX_in_maze, int& posY_in_maze);
+
 
 protected:
 	// Called when the game starts or when spawned

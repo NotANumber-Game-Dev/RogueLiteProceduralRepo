@@ -130,6 +130,16 @@ void AMazeGenerator::setBiomes(FString bioma)
     
 }
 
+void AMazeGenerator::getRoomOrentation(float _x, float _y, int& id_sala, int& posX_in_maze, int& posY_in_maze)
+{
+    posX_in_maze = (_x / sizeSquare) - 1;//mirar la pos del jugador i dividir pel tamany d'una cela per saber en quina estem, restem 1 per anar de 0 a length - 1
+    posY_in_maze = (_y / sizeSquare) - 1;
+
+    id_sala = _maze[posY_in_maze].A[posX_in_maze];
+}
+
+
+
 
 
 // Called when the game starts or when spawned
