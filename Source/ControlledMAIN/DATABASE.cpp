@@ -50,6 +50,26 @@ void UDATABASE::AddRecolectionItem(const TSubclassOf<AActor>& Item,int quantity)
 	CheckAndUpdateQuests();
 }
 
+void UDATABASE::AddNSpecificEnemiesKilledCounter(const TSubclassOf<AActor>& Item)
+{
+	for (TPair<int32, int32>& pair : CounterNSpecificEnemiesKilled) {
+		for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) ///Get Database
+		{
+			for (int x = 0; x < DATABASE_QUEST_LIST[i].Quest_List.Num(); x++) //Get quests
+			{
+				if (DATABASE_QUEST_LIST[i].Quest_List[x].State == EQuest_State::Grabbed) {
+					for (int y = 0; y < DATABASE_QUEST_LIST[i].Quest_List[x].Objectives.Num(); y++) {
+						if (Item->IsChildOf(DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_Kill)) {
+							pair.Value += 1;
+						}
+					}
+				}
+			}
+		}
+	}
+	CheckAndUpdateQuests();
+}
+
 void UDATABASE::AddInteractWithItem(const TSubclassOf<AActor>& Item)
 {
 	
@@ -94,6 +114,15 @@ void UDATABASE::SetCounterForRecolectionItems(const TSubclassOf<AActor>& Instiga
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) {
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned)) {
 			CounterRecolectionItem.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+		}
+	}
+}
+
+void UDATABASE::SetCounterNSpecificEnemiesKilled(const TSubclassOf<AActor>& Instigator, int Current_Quest, int Amount)
+{
+	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) {
+		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned)) {
+			CounterNSpecificEnemiesKilled.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
 		}
 	}
 }
@@ -160,6 +189,7 @@ void UDATABASE::CheckAndUpdateQuests()
 					{
 					int32 recolection = 0;
 					int32 nEnemiesKilled = 0;
+					int32 nSpeceificEnemy = 0;
 					bool isInteracted = false;
 					switch (DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].Type)
 					{
@@ -194,6 +224,15 @@ void UDATABASE::CheckAndUpdateQuests()
 							}
 
 							if (isInteracted) {
+								DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
+							}
+							break;
+						case EQuest_Objective_Type::KILL_N_ENEMIES_SPECIFIC:
+							if (CounterNSpecificEnemiesKilled.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID) != nullptr) {
+								nSpeceificEnemy=*CounterNSpecificEnemiesKilled.Find(DATABASE_QUEST_LIST[i].Quest_List[x].ID);
+							}
+
+							if (nSpeceificEnemy >= DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_Kill_Amount) {
 								DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
 							}
 							break;
