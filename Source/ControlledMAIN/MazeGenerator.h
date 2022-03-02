@@ -75,6 +75,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void getRoomOrentation(float _x, float _y, int &id_sala, int &posX_in_maze, int& posY_in_maze);
 
+	UFUNCTION(BlueprintCallable)
+		void getRoomOrentationWithXY(int _x, int _y, int& id_sala);
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, category = "Load Maps")
+		FVector playerStart;
 
 protected:
 	// Called when the game starts or when spawned
@@ -83,7 +88,6 @@ protected:
 	TArray<FNestetdArray> _maze;
 
 	FVector boss;
-	FVector playerStart;
 	
 	int _posCount;
 	FPos _currentPos;
