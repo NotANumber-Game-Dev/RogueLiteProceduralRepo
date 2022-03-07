@@ -28,7 +28,7 @@ enum EQuest_Objective_Type
 	RECOLECCTION,//done
 	INTERACT_WITH_OBJECT,//done
 	KILL_N_ENEMIES,//done
-	KILL_N_ENEMIES_SPECIFIC,
+	KILL_N_ENEMIES_SPECIFIC,//done
 	KILL_SPECIFIC_ENEMY
 };
 
@@ -137,6 +137,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (TitleProperty = "Database Quest (Recolection Item)"))
 	TMap<int32, bool> CounterInteractWithObject;
 
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, meta = (TitleProperty = "Database Quest (Enemies N Killed)"))
+	TMap<int32, int32> CounterKillSpecificEnemy;
+
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere,meta = (TitleProperty = "Database Quest List"))
 	TArray<FNPC_Quest_List> DATABASE_QUEST_LIST;
@@ -155,6 +158,9 @@ public:
 	void AddRecolectionItem(const TSubclassOf<AActor>& Item,int quantity);
 
 	UFUNCTION(BlueprintCallable)
+	void AddKillSpecificEnemyCounter(const TSubclassOf<AActor>& Item);
+
+	UFUNCTION(BlueprintCallable)
 	void AddNSpecificEnemiesKilledCounter(const TSubclassOf<AActor>& Item);
 
 
@@ -168,6 +174,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator, int Current_Quest, int Amount = 0);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCounterForKillSpecificEnemy(const TSubclassOf<AActor>& Instigator, int Current_Quest, int Amount = 0);
 
 	UFUNCTION(BlueprintCallable)
 	void SetCounterForRecolectionItems(const TSubclassOf<AActor>& Instigator, int Current_Quest, int Amount = 0);
