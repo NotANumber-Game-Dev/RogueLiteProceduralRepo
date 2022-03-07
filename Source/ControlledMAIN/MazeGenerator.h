@@ -115,8 +115,11 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	
-
+	UFUNCTION(BlueprintCallable)
 	void init();
+
+	UFUNCTION(BlueprintCallable)
 	void RenderLevels();
+
 	bool isWalOnPos(int x, int y);
 };

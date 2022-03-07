@@ -65,7 +65,7 @@ AMazeGenerator::AMazeGenerator()
     _checkedPos = 0;
 
 
-    init();
+    //init();
 
     UReadXMLLevelDetail::ReadXmlFile(FPaths::ProjectContentDir() + "template.xml");
 
@@ -79,7 +79,7 @@ AMazeGenerator::AMazeGenerator()
         setBiomes("Bottom Sewer");
     }
 
-    RenderLevels();
+    //RenderLevels();
 }
 
 
