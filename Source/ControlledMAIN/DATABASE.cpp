@@ -59,7 +59,7 @@ void UDATABASE::AddKillSpecificEnemyCounter(const TSubclassOf<AActor>& Item)
 			{
 				if (DATABASE_QUEST_LIST[i].Quest_List[x].State == EQuest_State::Grabbed) {
 					for (int y = 0; y < DATABASE_QUEST_LIST[i].Quest_List[x].Objectives.Num(); y++) {
-						//FALTA MIRAR QUE SIGUI EL QUE TÉ EL BOOL DE SER ESPECIAL
+						
 						if (Item->IsChildOf(DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].What_to_Kill)) {
 							pair.Value += 1;
 						}
