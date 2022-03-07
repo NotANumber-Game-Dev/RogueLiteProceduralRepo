@@ -132,8 +132,8 @@ void AMazeGenerator::setBiomes(FString bioma)
 
 void AMazeGenerator::getRoomOrentation(float _x, float _y, int& id_sala, int& posX_in_maze, int& posY_in_maze)
 {
-    posX_in_maze = ((_x + (sizeSquare/2)) / sizeSquare)+(playerStart.X); //mirar la pos del jugador i dividir pel tamany d'una cela per saber en quina estem, restem 1 per anar de 0 a length - 1
-    posY_in_maze = ((_y + (sizeSquare/2)) / sizeSquare)+(playerStart.Y);
+    posX_in_maze = (((_x + (sizeSquare/2)) / sizeSquare)+(playerStart.X))-1; //mirar la pos del jugador i dividir pel tamany d'una cela per saber en quina estem, restem 1 per anar de 0 a length - 1
+    posY_in_maze = (((_y + (sizeSquare/2)) / sizeSquare)+(playerStart.Y))-1;
     if (posY_in_maze < _maze.Num() && posX_in_maze < _maze[0].A.Num() && posY_in_maze > -1 && posX_in_maze > -1)
     {
         id_sala = _maze[posY_in_maze].A[posX_in_maze];
@@ -247,7 +247,7 @@ void AMazeGenerator::canContinue(int x, int y)
     _posCount += 1;
     _prevPosList.Add(_currentPos);
 
-    _maze[_currentPos.X].A[_currentPos.Y] += _randNum;
+    _maze[_currentPos.Y].A[_currentPos.X] += _randNum;
     _currentPos.X = _currentPos.X + x;
     _currentPos.Y = _currentPos.Y + y;
 
@@ -268,7 +268,7 @@ void AMazeGenerator::canContinue(int x, int y)
     default:
         break;
     }
-    _maze[_currentPos.X].A[_currentPos.Y] += _randNum;
+    _maze[_currentPos.Y].A[_currentPos.X] += _randNum;
     _checkedPos = 0;
     for (int i = 0; i < 4; i++)
     {
@@ -404,10 +404,10 @@ void AMazeGenerator::RenderLevels()
     float rX = ((float)playerStart.X * sizeSquare);
     float rY = ((float)playerStart.Y * sizeSquare);
 
-    //GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("HOLAAAA"));
-    for (size_t i = 0; i < _maze.Num(); i++)
+   
+    for (size_t i = 0; i < _maze.Num(); i++)//Y
     {
-        for (size_t j = 0; j < _maze[i].A.Num(); j++)
+        for (size_t j = 0; j < _maze[i].A.Num(); j++)//X
         {
 
 
@@ -421,105 +421,105 @@ void AMazeGenerator::RenderLevels()
             if (_maze[i].A[j] == 1) {
 
                 //                                  BIOMA_nameMaps[]
-                test->LoadLevelInstance(GetWorld(), nameMaps[11], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[11], FVector((posY * j) - rY, (posX * i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //DOWN
             if (_maze[i].A[j] == 2) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[13], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[13], FVector((posY * j) - rY, (posX * i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //TOP-DOWN
             if (_maze[i].A[j] == 3) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[4], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[4], FVector((posY * j) - rY, (posX * i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //RIGHT
             if (_maze[i].A[j] == 4) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[14], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[14], FVector((posY * j) - rY, (posX * i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //RIGHT-TOP
             if (_maze[i].A[j] == 5) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[7], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[7], FVector((posY * j) - rY, (posX * i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //RIGHT-DOWN
             if (_maze[i].A[j] == 6) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[1], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[1], FVector((posY * j) - rY, (posX * i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //TOP-DOWN-RIGHT
             if (_maze[i].A[j] == 7) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[8], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[8], FVector((posY* j) - rY, (posX* i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //LEFT
             if (_maze[i].A[j] == 8) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[12], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[12], FVector((posY* j) - rY, (posX* i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //TOP-LEFT
             if (_maze[i].A[j] == 9) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[6], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[6], FVector((posY* j) - rY, (posX* i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //LEFT-DOWN
             if (_maze[i].A[j] == 10) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[0], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[0], FVector((posY* j) - rY, (posX* i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //TOP-DOWN-LEFT
             if (_maze[i].A[j] == 11) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[5], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[5], FVector((posY* j) - rY, (posX* i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //RIGHT-LEFT
             if (_maze[i].A[j] == 12) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[3], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[3], FVector((posY* j) - rY, (posX* i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //TOP-RIGHT-LEFT
             if (_maze[i].A[j] == 13) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[10], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[10], FVector((posY * j) - rY, (posX * i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //RIGHT-DOWN-LEFT
             if (_maze[i].A[j] == 14) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[2], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[2], FVector((posY * j) - rY, (posX * i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
             //TOP-RIGHT-DOWN-LEFT
             if (_maze[i].A[j] == 15) {
 
-                test->LoadLevelInstance(GetWorld(), nameMaps[9], FVector((posX * i) - rX, (posY * j) - rY, 0), FRotator(0, 0, 0), succes);
+                test->LoadLevelInstance(GetWorld(), nameMaps[9], FVector((posY* j) - rY, (posX* i) - rX, 0), FRotator(0, 0, 0), succes);
 
             }
 
@@ -534,7 +534,7 @@ bool AMazeGenerator::isWalOnPos(int x, int y)
         _checkedPos += _randNum;
         return true;
     }
-    if (_maze[x].A[y] != 0)
+    if (_maze[y].A[x] != 0)
     {
         _checkedPos += _randNum;
         return true;
