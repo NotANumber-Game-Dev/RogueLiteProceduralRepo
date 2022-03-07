@@ -81,6 +81,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, category = "Load Maps")
 		FVector playerStart;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, category = "INTERNAL Maps")
+		TArray<ULevelStreaming*> levels_loaded;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -101,6 +104,8 @@ protected:
 	int getRandomDirection();
 	void addToCount(int i);
 	void canContinue(int x, int y);
+
+	
 
 
 	TArray<FString> XMLContent;
