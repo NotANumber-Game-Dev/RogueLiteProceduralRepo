@@ -274,6 +274,7 @@ void UDATABASE::CheckAndUpdateQuests()
 
 							if (KillSpecificEnemy > 0) {
 								DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted = true;
+
 							}
 							break;
 					}
@@ -297,6 +298,7 @@ void UDATABASE::CheckAndUpdateQuests()
 			{
 				DATABASE_QUEST_LIST[i].Quest_List[x].State = EQuest_State::Complete;
 				UE_LOG(LogTemp,Warning,TEXT("Mission Completed"));
+				MissionsCompleted.Broadcast();
 			}
 			else
 			{

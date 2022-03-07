@@ -114,6 +114,8 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDataUpdated);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMissionCompleted);
+
 
 UCLASS(BlueprintType,Blueprintable)
 class CONTROLLEDMAIN_API UDATABASE : public UObject
@@ -198,5 +200,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
 	FDataUpdated UpdateData;
+
+
+	//Evento per missions completades
+	//per poder fer que el jugaor retorni al lobby
+	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
+	FMissionCompleted MissionsCompleted;
+
 	
 };
