@@ -125,7 +125,9 @@ void UDATABASE::SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator
 	{
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned))
 		{
-			CounterEnemiesKilled.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+			if (CounterEnemiesKilled.Find(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID) == nullptr) {
+				CounterEnemiesKilled.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+			}
 		}
 	}
 }
@@ -134,7 +136,11 @@ void UDATABASE::SetCounterForKillSpecificEnemy(const TSubclassOf<AActor>& Instig
 {
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) {
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned)) {
-			CounterKillSpecificEnemy.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+
+			if (CounterKillSpecificEnemy.Find(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID) == nullptr) {
+
+				CounterKillSpecificEnemy.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+			}
 		}
 	}
 }
@@ -143,7 +149,10 @@ void UDATABASE::SetCounterForRecolectionItems(const TSubclassOf<AActor>& Instiga
 {
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) {
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned)) {
-			CounterRecolectionItem.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+			if (CounterRecolectionItem.Find(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID) == nullptr) {
+
+				CounterRecolectionItem.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+			}
 		}
 	}
 }
@@ -152,7 +161,9 @@ void UDATABASE::SetCounterNSpecificEnemiesKilled(const TSubclassOf<AActor>& Inst
 {
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) {
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned)) {
-			CounterNSpecificEnemiesKilled.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+			if (CounterNSpecificEnemiesKilled.Find(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID) == nullptr) {
+				CounterNSpecificEnemiesKilled.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, Amount);
+			}
 		}
 	}
 }
@@ -161,7 +172,9 @@ void UDATABASE::SetCounterForInteractWithItem(const TSubclassOf<AActor>& Instiga
 {
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++) {
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned)) {
-			CounterInteractWithObject.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, isInteracted);
+			if (CounterInteractWithObject.Find(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID) == nullptr) {
+				CounterInteractWithObject.Add(DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].ID, isInteracted);
+			}
 		}
 	}
 }
@@ -170,22 +183,46 @@ void UDATABASE::SetCounterForInteractWithItem(const TSubclassOf<AActor>& Instiga
 //TODO comprovar si la quest s'ha fet, llavors donar nova missió. Mirar que no sigui negatiu
 void UDATABASE::GetNextQuest(const TSubclassOf<AActor> &Instigator, bool& noMoreMisions)
 {
+
+
 	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++)
 	{
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned))
 		{
-			if (DATABASE_QUEST_LIST[i].Quest_List.Num() > DATABASE_QUEST_LIST[i].Mission_Index + 1)
-			{
-				DATABASE_QUEST_LIST[i].Mission_Index = DATABASE_QUEST_LIST[i].Mission_Index + 1;
-				DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State = EQuest_State::Grabbed;
-				noMoreMisions = false;
-				return;
+			if (DATABASE_QUEST_LIST[i].Mission_Index < 0) {
+				if (DATABASE_QUEST_LIST[i].Quest_List.Num() > DATABASE_QUEST_LIST[i].Mission_Index + 1)
+				{
+					DATABASE_QUEST_LIST[i].Mission_Index = DATABASE_QUEST_LIST[i].Mission_Index + 1;
+					DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State = EQuest_State::Grabbed;
+					noMoreMisions = false;
+					return;
+				}
+				else
+				{
+					noMoreMisions = true;
+					return;
+				}
 			}
-			else
-			{
-				noMoreMisions = true;
-				return;
+			else {
+				if (DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State == EQuest_State::Complete) {
+					if (DATABASE_QUEST_LIST[i].Quest_List.Num() > DATABASE_QUEST_LIST[i].Mission_Index + 1)
+					{
+						DATABASE_QUEST_LIST[i].Mission_Index = DATABASE_QUEST_LIST[i].Mission_Index + 1;
+						DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State = EQuest_State::Grabbed;
+						noMoreMisions = false;
+						return;
+					}
+					else
+					{
+						noMoreMisions = true;
+						return;
+					}
+				}
+				else {
+					return;
+				}
 			}
+			
 		}
 	}
 	UpdateData.Broadcast();
