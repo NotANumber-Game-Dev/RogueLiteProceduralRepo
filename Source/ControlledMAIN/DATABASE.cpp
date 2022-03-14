@@ -335,7 +335,10 @@ void UDATABASE::CheckAndUpdateQuests()
 			{
 				DATABASE_QUEST_LIST[i].Quest_List[x].State = EQuest_State::Complete;
 				UE_LOG(LogTemp,Warning,TEXT("Mission Completed"));
-				MissionsCompleted.Broadcast();
+				//MIrem que només es fagi el evento si es la missio actual
+				if (DATABASE_QUEST_LIST[i].Mission_Index==x) {
+					MissionsCompleted.Broadcast();
+				}
 			}
 			else
 			{
