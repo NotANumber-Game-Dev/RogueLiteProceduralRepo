@@ -205,6 +205,7 @@ void UDATABASE::GetNextQuest(const TSubclassOf<AActor> &Instigator, bool& noMore
 			}
 			else {
 				if (DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State == EQuest_State::Complete) {
+					
 					if (DATABASE_QUEST_LIST[i].Quest_List.Num() > DATABASE_QUEST_LIST[i].Mission_Index + 1)
 					{
 						DATABASE_QUEST_LIST[i].Mission_Index = DATABASE_QUEST_LIST[i].Mission_Index + 1;
@@ -219,6 +220,7 @@ void UDATABASE::GetNextQuest(const TSubclassOf<AActor> &Instigator, bool& noMore
 					}
 				}
 				else {
+
 					return;
 				}
 			}
@@ -235,6 +237,26 @@ void UDATABASE::SetStateQuest(const TSubclassOf<AActor> &Instigator, int QuestIn
 		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned))
 		{
 			DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State = inState;
+		}
+	}
+}
+
+void UDATABASE::getIsQuestCompleted(const TSubclassOf<AActor>& Instigator, bool& isMisionComplete)
+{
+	for (int i = 0; i < DATABASE_QUEST_LIST.Num(); i++)
+	{
+		if (Instigator->IsChildOf(DATABASE_QUEST_LIST[i].Actor_Assigned))
+		{
+			if (DATABASE_QUEST_LIST[i].Mission_Index > 0) {
+				if (DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State == EQuest_State::Complete) {
+					isMisionComplete = true;
+				}
+				else {
+					isMisionComplete = false;
+					return;
+				}
+			}
+
 		}
 	}
 }

@@ -195,6 +195,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetStateQuest(const TSubclassOf<AActor> &Instigator,int QuestIndex, EQuest_State inState);
 	
+	UFUNCTION(BlueprintCallable)
+	void getIsQuestCompleted(const TSubclassOf<AActor>& Instigator, bool& isMisionComplete);
 	
 	void CheckAndUpdateQuests();
 
