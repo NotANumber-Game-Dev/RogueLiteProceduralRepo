@@ -117,6 +117,12 @@ void UDATABASE::AddInteractWithItem(const TSubclassOf<AActor>& Item)
 void UDATABASE::ResetCurrentLaodedProggress()
 {
 	DATABASE_QUEST_LIST = STARTGAMECOPY_DATABASE_QUEST_LIST;
+	CounterEnemiesKilled.Empty();
+	CounterEnemiesKilled.Reset();
+	CounterNSpecificEnemiesKilled.Empty();
+	CounterRecolectionItem.Empty();
+	CounterInteractWithObject.Empty();
+	CounterKillSpecificEnemy.Empty();
 }
 
 void UDATABASE::SetCounterForEnemiesKilled(const TSubclassOf<AActor> &Instigator, int Current_Quest, int Amount)
