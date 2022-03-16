@@ -348,25 +348,29 @@ void UDATABASE::CheckAndUpdateQuests()
 		{
 			for (int y = 0; y < DATABASE_QUEST_LIST[i].Quest_List[x].Objectives.Num(); y++) //Get Objectives
 			{
-				if (!DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted )
+				if (!DATABASE_QUEST_LIST[i].Quest_List[x].Objectives[y].IsCompleted ) //Check all ojectives are not completed
 				{
+					//If not completed true doesn't have all objectives
 					DoesntHaveAllObjectivesDone = true;
 				}
 			}
-			if (!DoesntHaveAllObjectivesDone)
+			if (!DoesntHaveAllObjectivesDone) //No objective was
 			{
 				DATABASE_QUEST_LIST[i].Quest_List[x].State = EQuest_State::Complete;
 				UE_LOG(LogTemp,Warning,TEXT("Mission Completed"));
-				//MIrem que només es fagi el evento si es la missio actual
-				if (DATABASE_QUEST_LIST[i].Mission_Index==x) {
-					MissionsCompleted.Broadcast();
-				}
 			}
 			else
 			{
 				UE_LOG(LogTemp,Warning,TEXT("Mission Uncompleted"));
 			}
 			DoesntHaveAllObjectivesDone = false;
+		}
+		//MIrem que només es fagi el evento si es la missio actual
+		if (DATABASE_QUEST_LIST[i].Mission_Index>-1)
+		{
+			if (DATABASE_QUEST_LIST[i].Quest_List[DATABASE_QUEST_LIST[i].Mission_Index].State == EQuest_State::Complete) {
+				MissionsCompleted.Broadcast();
+			}
 		}
 	}
 	UpdateData.Broadcast();
