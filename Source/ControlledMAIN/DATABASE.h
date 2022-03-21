@@ -7,6 +7,9 @@
 #include "UObject/Object.h"
 #include "DATABASE.generated.h"
 
+
+
+
 UENUM(BlueprintType,Blueprintable)
 enum EQuest_State
 {
