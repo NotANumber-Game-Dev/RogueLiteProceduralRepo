@@ -81,6 +81,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, category = "Load Maps")
 		FVector playerStart;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, category = "Load Maps")
+		FVector ItemToRecolect;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, category = "INTERNAL Maps")
 		TArray<ULevelStreaming*> levels_loaded;
 

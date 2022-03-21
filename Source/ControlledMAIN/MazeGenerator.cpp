@@ -356,6 +356,14 @@ void AMazeGenerator::RenderLevels()
     boss.Y = randY - playerStart.Y;
     boss.Z = 400;
 
+    randX = FMath::RandRange((int)SIZE / 2, (int)SIZE - (int)playerStart.X);
+    randY = FMath::RandRange((int)SIZE / 2, (int)SIZE - (int)playerStart.Y);
+
+    ItemToRecolect.X = randX - playerStart.X;
+    ItemToRecolect.Y = randY - playerStart.Y;
+    ItemToRecolect.Z = 400;
+
+
     FString aux;
 
     switch (biomes) {
